@@ -21,6 +21,11 @@ class QueueAddEvent extends QueueEvent {
   QueueAddEvent({required Episode super.episode, super.position});
 }
 
+/// Append every unfinished episode in chronological order without duplicate queue entries.
+class QueueAddAllUnplayedEpisodesEvent extends QueueEvent {
+  QueueAddAllUnplayedEpisodesEvent({required Podcast podcast}) : super(podcast: podcast);
+}
+
 class QueueRemoveEvent extends QueueEvent {
   QueueRemoveEvent({required Episode episode}) : super(episode: episode);
 }

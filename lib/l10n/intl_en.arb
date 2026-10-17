@@ -90,6 +90,12 @@
   "@layout_selector_hide_caught_up": {"description": "Toggle to hide subscribed podcasts with no unfinished episodes"},
   "layout_selector_reverse_sort": "Reverse sort order",
   "@layout_selector_reverse_sort": {"description": "Toggle to reverse library sorting"},
+  "library_add_all_unfinished": "Add all unfinished episodes to Up Next (oldest first)",
+  "library_play_oldest_unfinished": "Play oldest unfinished episode",
+  "library_download_unfinished": "Download unfinished episodes",
+  "library_podcast_details": "Podcast details and settings",
+  "library_confirm_download": "Download all unfinished episodes?",
+  "library_confirm_mark_played": "Mark every unfinished episode as played?",
   "no_subscriptions_message": "Tap the Discovery button below or use the search bar above to find your first podcast",
   "@no_subscriptions_message": {
     "description": "Displayed on the library tab when the user has no subscriptions",

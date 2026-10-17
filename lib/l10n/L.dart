@@ -206,6 +206,29 @@ class L {
           locale: localeName,
         );
   }
+  String get library_add_all_unfinished => message('library_add_all_unfinished') ??
+      Intl.message('Add all unfinished episodes to Up Next (oldest first)',
+          name: 'library_add_all_unfinished', locale: localeName);
+
+  String get library_play_oldest_unfinished => message('library_play_oldest_unfinished') ??
+      Intl.message('Play oldest unfinished episode',
+          name: 'library_play_oldest_unfinished', locale: localeName);
+
+  String get library_download_unfinished => message('library_download_unfinished') ??
+      Intl.message('Download unfinished episodes',
+          name: 'library_download_unfinished', locale: localeName);
+
+  String get library_podcast_details => message('library_podcast_details') ??
+      Intl.message('Podcast details and settings',
+          name: 'library_podcast_details', locale: localeName);
+
+  String get library_confirm_download => message('library_confirm_download') ??
+      Intl.message('Download all unfinished episodes?',
+          name: 'library_confirm_download', locale: localeName);
+
+  String get library_confirm_mark_played => message('library_confirm_mark_played') ??
+      Intl.message('Mark every unfinished episode as played?',
+          name: 'library_confirm_mark_played', locale: localeName);
 
   String get no_subscriptions_message {
     return message('no_subscriptions_message') ??
