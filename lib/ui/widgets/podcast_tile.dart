@@ -2,20 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:io';
 
-import 'package:anytime/bloc/podcast/audio_bloc.dart';
 import 'package:anytime/bloc/podcast/podcast_bloc.dart';
-import 'package:anytime/bloc/podcast/queue_bloc.dart';
 import 'package:anytime/bloc/settings/settings_bloc.dart';
-import 'package:anytime/entities/app_settings.dart';
 import 'package:anytime/entities/podcast.dart';
 import 'package:anytime/l10n/L.dart';
-import 'package:anytime/state/queue_event_state.dart';
-import 'package:anytime/ui/podcast/now_playing.dart';
 import 'package:anytime/ui/podcast/podcast_details.dart';
 import 'package:anytime/ui/widgets/tile_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:anytime/ui/widgets/podcast_library_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:provider/provider.dart';
@@ -30,11 +24,8 @@ class PodcastTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final audioBloc = Provider.of<AudioBloc>(context, listen: false);
-    final queueBloc = Provider.of<QueueBloc>(context, listen: false);
     final podcastBloc = Provider.of<PodcastBloc>(context);
     final settingsBloc = Provider.of<SettingsBloc>(context);
-    final settings = Provider.of<SettingsBloc>(context, listen: false).currentSettings;
 
     var semanticTitle = '${podcast.title}.';
 
@@ -51,21 +42,8 @@ class PodcastTile extends StatelessWidget {
     return Semantics(
       customSemanticsActions: {
         if (podcast.id != null)
-          CustomSemanticsAction(label: L.of(context)!.podcast_context_play_latest_episode_label): () {
-            audioBloc.playLatestEpisode(podcast);
-            optionalShowNowPlaying(context, settings);
-          },
-        if (podcast.id != null)
-          CustomSemanticsAction(label: L.of(context)!.podcast_context_queue_latest_episode_label): () =>
-              queueBloc.queueEvent(QueueAddLatestEpisodeEvent(podcast: podcast)),
-        if (podcast.id != null)
-          CustomSemanticsAction(label: L.of(context)!.podcast_context_play_next_episode_label): () {
-            audioBloc.playNextUnplayedEpisode(podcast);
-            optionalShowNowPlaying(context, settings);
-          },
-        if (podcast.id != null)
-          CustomSemanticsAction(label: L.of(context)!.podcast_context_queue_next_episode_label): () =>
-              queueBloc.queueEvent(QueueAddNextUnplayedEpisodeEvent(podcast: podcast)),
+          CustomSemanticsAction(label: L.of(context)!.label_podcast_actions):
+              () => showPodcastLibraryActions(context, podcast),
       },
       child: ListTile(
         onTap: () {
@@ -79,7 +57,7 @@ class PodcastTile extends StatelessWidget {
             podcastBloc.podcastEvent(PodcastEvent.reloadSubscriptions);
           });
         },
-        onLongPress: podcast.id == null ? null : () => showContextMenu(context),
+        onLongPress: podcast.id == null ? null : () => showPodcastLibraryActions(context, podcast),
         minVerticalPadding: 9,
         leading: ExcludeSemantics(
           child: Hero(
@@ -110,127 +88,5 @@ class PodcastTile extends StatelessWidget {
         isThreeLine: false,
       ),
     );
-  }
-
-  /// If we have the 'show now playing upon play' option set to true, launch
-  /// the [NowPlaying] widget automatically.
-  void optionalShowNowPlaying(BuildContext context, AppSettings settings) {
-    if (settings.autoOpenNowPlaying) {
-      Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (context) => const NowPlaying(),
-          settings: const RouteSettings(name: 'nowplaying'),
-          fullscreenDialog: false,
-        ),
-      );
-    }
-  }
-
-  void showContextMenu(BuildContext context) {
-    final audioBloc = Provider.of<AudioBloc>(context, listen: false);
-    final queueBloc = Provider.of<QueueBloc>(context, listen: false);
-    final settings = Provider.of<SettingsBloc>(context, listen: false).currentSettings;
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoActionSheet(
-            actions: <Widget>[
-              CupertinoActionSheetAction(
-                isDefaultAction: false,
-                onPressed: () {
-                  audioBloc.playLatestEpisode(podcast);
-                  Navigator.pop(context, 'Close');
-                  optionalShowNowPlaying(context, settings);
-                },
-                child: Text(L.of(context)!.podcast_context_play_latest_episode_label),
-              ),
-              CupertinoActionSheetAction(
-                isDefaultAction: false,
-                onPressed: () {
-                  queueBloc.queueEvent(QueueAddLatestEpisodeEvent(podcast: podcast));
-                  Navigator.pop(context, 'Close');
-                },
-                child: Text(L.of(context)!.podcast_context_queue_latest_episode_label),
-              ),
-              CupertinoActionSheetAction(
-                isDefaultAction: false,
-                onPressed: () {
-                  audioBloc.playNextUnplayedEpisode(podcast);
-                  Navigator.pop(context, 'Close');
-                  optionalShowNowPlaying(context, settings);
-                },
-                child: Text(L.of(context)!.podcast_context_play_next_episode_label),
-              ),
-              CupertinoActionSheetAction(
-                isDefaultAction: false,
-                onPressed: () {
-                  queueBloc.queueEvent(QueueAddNextUnplayedEpisodeEvent(podcast: podcast));
-                  Navigator.pop(context, 'Close');
-                },
-                child: Text(L.of(context)!.podcast_context_queue_next_episode_label),
-              ),
-            ],
-            cancelButton: CupertinoActionSheetAction(
-              isDefaultAction: false,
-              onPressed: () {
-                Navigator.pop(context, 'Close');
-              },
-              child: Text(L.of(context)!.close_button_label),
-            ),
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Semantics(
-            header: true,
-            child: SimpleDialog(
-              title: Text(L.of(context)!.label_podcast_actions),
-              children: <Widget>[
-                SimpleDialogOption(
-                  onPressed: () {
-                    audioBloc.playLatestEpisode(podcast);
-                    Navigator.pop(context, '');
-                    optionalShowNowPlaying(context, settings);
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  child: Text(L.of(context)!.podcast_context_play_latest_episode_label),
-                ),
-                SimpleDialogOption(
-                  onPressed: () {
-                    queueBloc.queueEvent(QueueAddLatestEpisodeEvent(podcast: podcast));
-                    Navigator.pop(context, '');
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  child: Text(L.of(context)!.podcast_context_queue_latest_episode_label),
-                ),
-                SimpleDialogOption(
-                  onPressed: () {
-                    audioBloc.playNextUnplayedEpisode(podcast);
-                    Navigator.pop(context, '');
-                    optionalShowNowPlaying(context, settings);
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  child: Text(L.of(context)!.podcast_context_play_next_episode_label),
-                ),
-                SimpleDialogOption(
-                  onPressed: () {
-                    queueBloc.queueEvent(QueueAddNextUnplayedEpisodeEvent(podcast: podcast));
-                    Navigator.pop(context, '');
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  child: Text(L.of(context)!.podcast_context_queue_next_episode_label),
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    }
   }
 }
