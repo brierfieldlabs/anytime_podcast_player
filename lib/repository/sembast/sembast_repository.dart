@@ -64,10 +64,6 @@ class SembastRepository extends Repository {
     podcast.lastUpdated = DateTime.now();
 
     if (snapshot == null) {
-      // Only new subscriptions get the fork default. Existing saved sort preferences are untouched.
-      if (podcast.sort == PodcastEpisodeSort.none) {
-        podcast.sort = PodcastEpisodeSort.earliestFirst;
-      }
       podcast.subscribedDate = DateTime.now();
       podcast.id = await _podcastStore.add(await _db, podcast.toMap());
     } else {

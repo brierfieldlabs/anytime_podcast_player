@@ -716,6 +716,12 @@ class MobilePodcastService extends PodcastService {
         }
       }
 
+      // Apply the fork default only when a user follows a new podcast.
+      // Existing subscriptions and their chosen episode order stay unchanged.
+      if (podcast.id == null && podcast.sort == PodcastEpisodeSort.none) {
+        podcast.sort = PodcastEpisodeSort.earliestFirst;
+      }
+
       return repository.savePodcast(podcast);
     }
 
