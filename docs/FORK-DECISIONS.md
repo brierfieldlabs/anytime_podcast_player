@@ -38,6 +38,6 @@ Issues: #1 library behaviour, #2 long-press, #3 performance, #4 fork identity/bu
 
 ## Acceptance and next action
 
-No fork Android build or on-phone performance result has been verified yet. Do not claim an APK is available. Use one existing designated Android runner with a suitable Flutter toolchain, then exact-head source checks, package/signature verification and on-phone acceptance before release. Never auto-merge upstream, publish an APK, or alter published tags without approval.
+The identity PR #5 now specifies CT142-local Android CI; do not treat CI as passed until an exact-head run completes. No fork Android build or on-phone performance result has been verified yet. Do not claim an APK is available. Use one existing designated Android runner with a suitable Flutter toolchain, then exact-head source checks, package/signature verification and on-phone acceptance before release. Never auto-merge upstream, publish an APK, or alter published tags without approval.
 
-Immediate next step: verify and review library customisations in PR against `main`, then work on the existing long-press menu and measured performance.
+Immediate next step: register one additional **repo-scoped listener on existing Hamblett CT142** (no new CT), run exact-head Android CI for identity PR #5, then reconcile library PR #6. Keep the long-press menu and phone-measured performance work separate.
