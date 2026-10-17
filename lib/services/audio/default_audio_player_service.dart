@@ -109,7 +109,7 @@ class DefaultAudioPlayerService extends AudioPlayerService {
       ),
       config: const AudioServiceConfig(
         androidResumeOnClick: true,
-        androidNotificationChannelName: 'Anytime Podcast Player',
+        androidNotificationChannelName: 'Podcast Anytime',
         androidNotificationIcon: 'drawable/ic_stat_name',
         androidNotificationOngoing: false,
         androidStopForegroundOnPause: true,

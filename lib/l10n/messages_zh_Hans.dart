@@ -39,8 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, dynamic> _notInlinedMessages(_) => {
       'about_label': MessageLookupByLibrary.simpleMessage('关于'),
     'add_rss_feed_option': MessageLookupByLibrary.simpleMessage('添加 RSS Feed'),
-    'app_title': MessageLookupByLibrary.simpleMessage('Anytime 播客播放器'),
-    'app_title_short': MessageLookupByLibrary.simpleMessage('Anytime 播放器'),
+    'app_title': MessageLookupByLibrary.simpleMessage('Podcast Anytime'),
+    'app_title_short': MessageLookupByLibrary.simpleMessage('Podcast Anytime'),
     'audio_effect_trim_silence_label': MessageLookupByLibrary.simpleMessage('静音消除'),
     'audio_effect_volume_boost_label': MessageLookupByLibrary.simpleMessage('音量增强'),
     'audio_settings_playback_speed_label': MessageLookupByLibrary.simpleMessage('播放速度'),

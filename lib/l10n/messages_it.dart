@@ -61,8 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, dynamic> _notInlinedMessages(_) => {
       'about_label': MessageLookupByLibrary.simpleMessage('Info'),
     'add_rss_feed_option': MessageLookupByLibrary.simpleMessage('Aggiungi un Feed RSS'),
-    'app_title': MessageLookupByLibrary.simpleMessage('Anytime Podcast Player'),
-    'app_title_short': MessageLookupByLibrary.simpleMessage('Anytime Player'),
+    'app_title': MessageLookupByLibrary.simpleMessage('Podcast Anytime'),
+    'app_title_short': MessageLookupByLibrary.simpleMessage('Podcast Anytime'),
     'audio_effect_trim_silence_label': MessageLookupByLibrary.simpleMessage('Rimuovi Silenzio'),
     'audio_effect_volume_boost_label': MessageLookupByLibrary.simpleMessage('Incrementa Volume'),
     'audio_settings_playback_speed_label': MessageLookupByLibrary.simpleMessage('Velocità Riproduzione'),

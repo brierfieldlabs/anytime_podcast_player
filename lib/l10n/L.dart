@@ -39,7 +39,7 @@ class L {
   String get app_title {
     return message('app_title') ??
         Intl.message(
-          'Anytime Podcast Player',
+          'Podcast Anytime',
           name: 'app_title',
           desc: 'Full title for the application',
           locale: localeName,
@@ -49,7 +49,7 @@ class L {
   String get app_title_short {
     return message('app_title_short') ??
         Intl.message(
-          'Anytime Player',
+          'Podcast Anytime',
           name: 'app_title_short',
           desc: 'Title for the application',
           locale: localeName,

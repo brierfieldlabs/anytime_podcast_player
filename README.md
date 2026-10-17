@@ -1,3 +1,24 @@
+## Podcast Anytime (Brierfield Labs fork)
+
+Personal-use fork of [Anytime Podcast Player](https://github.com/amugofjava/anytime_podcast_player).
+Upstream copyright and BSD licence remain intact. Development and decisions are tracked in
+[GitHub issues](https://github.com/brierfieldlabs/anytime_podcast_player/issues) and
+[docs/FORK-DECISIONS.md](docs/FORK-DECISIONS.md).
+
+**Fork version policy:** Start at **v1.0.0**, then increment the full SemVer number:
+`v1.0.1` for backwards-compatible fixes, `v1.1.0` for backwards-compatible functionality,
+`v2.0.0` for incompatible changes. Do not use `test`, `rc` or other prerelease suffixes
+in fork version labels. `pubspec.yaml` carries the current package version and Android
+build counter, and the About screen displays the fork's SemVer. A source version is not
+a release until the required build, signing and on-phone acceptance checks pass.
+
+The Android application ID is `uk.co.brierfieldlabs.podcastanytime`, distinct from
+upstream. This means both applications can coexist, but their private data is not
+automatically shared. Preserve the original app and export subscriptions/data before
+any migration; never claim its data is automatically transferred.
+
+---
+
 ## Anytime Podcast Player
 
 This is the official repository for Anytime Podcast Player - the simple and easy to use Podcast

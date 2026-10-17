@@ -1,23 +1,49 @@
-name: Flutter CI
+name: Podcast Anytime Android CI
 
-on: [ push ]
+# GitHub Actions schedules work; the build only runs on Hamblett CT142.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  android:
+    runs-on: [self-hosted, Linux, X64, podcast-anytime-android, hamblett-ct142]
+    timeout-minutes: 90
+    env:
+      ANDROID_HOME: /opt/android-sdk
+      ANDROID_SDK_ROOT: /opt/android-sdk
+      JAVA_HOME: /usr/lib/jvm/java-21-openjdk-amd64
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.41.5'
           channel: stable
-          flutter-version-file: pubspec.yaml
-      - run: flutter pub get
-      - run: flutter test
-      - run: flutter build apk --debug
-      - run: flutter build appbundle --debug
+      - name: Dependencies
+        run: flutter pub get
+      - name: Static analysis
+        run: flutter analyze --no-fatal-infos
+      - name: Unit tests
+        run: flutter test
+      - name: Build Android
+        run: flutter build apk --debug
+      - name: Verify Android package and version
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=build/app/outputs/flutter-apk/app-debug.apk
+          test -s "$APK"
+          BADGING=$("$ANDROID_HOME/build-tools/37.0.0/aapt" dump badging "$APK")
+          grep -q "name='uk.co.brierfieldlabs.podcastanytime'" <<<"$BADGING"
+          grep -q "versionName='1.0.0'" <<<"$BADGING"
+          echo "Verified Podcast Anytime app ID and v1.0.0 package."
+      - name: Preserve Android build for installation review
+        uses: actions/upload-artifact@v4
+        with:
+          name: podcast-anytime-v1.0.0-android
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
