@@ -84,6 +84,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "library_all_caught_up": "All caught up! New episodes will appear here.",
+  "@library_all_caught_up": {"description": "Shown when all followed podcasts are hidden as played"},
+  "layout_selector_hide_caught_up": "Hide caught-up podcasts",
+  "@layout_selector_hide_caught_up": {"description": "Toggle to hide subscribed podcasts with no unfinished episodes"},
+  "layout_selector_reverse_sort": "Reverse sort order",
+  "@layout_selector_reverse_sort": {"description": "Toggle to reverse library sorting"},
   "no_subscriptions_message": "Tap the Discovery button below or use the search bar above to find your first podcast",
   "@no_subscriptions_message": {
     "description": "Displayed on the library tab when the user has no subscriptions",

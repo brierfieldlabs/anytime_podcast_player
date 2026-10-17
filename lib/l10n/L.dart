@@ -177,6 +177,36 @@ class L {
         );
   }
 
+  String get library_all_caught_up {
+    return message('library_all_caught_up') ??
+        Intl.message(
+          'All caught up! New episodes will appear here.',
+          name: 'library_all_caught_up',
+          desc: 'Message when all subscribed podcasts are hidden as played',
+          locale: localeName,
+        );
+  }
+
+  String get layout_selector_hide_caught_up {
+    return message('layout_selector_hide_caught_up') ??
+        Intl.message(
+          'Hide caught-up podcasts',
+          name: 'layout_selector_hide_caught_up',
+          desc: 'Toggle to hide subscribed podcasts with no unfinished episodes',
+          locale: localeName,
+        );
+  }
+
+  String get layout_selector_reverse_sort {
+    return message('layout_selector_reverse_sort') ??
+        Intl.message(
+          'Reverse sort order',
+          name: 'layout_selector_reverse_sort',
+          desc: 'Toggle to reverse the library sorting order',
+          locale: localeName,
+        );
+  }
+
   String get no_subscriptions_message {
     return message('no_subscriptions_message') ??
         Intl.message(

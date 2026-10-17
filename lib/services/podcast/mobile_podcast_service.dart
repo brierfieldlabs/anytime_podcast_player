@@ -680,7 +680,7 @@ class MobilePodcastService extends PodcastService {
         break;
     }
 
-    return subs;
+    return settingsService.layoutReverse ? subs.reversed.toList(growable: false) : subs;
   }
 
   @override
