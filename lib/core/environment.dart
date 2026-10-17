@@ -23,10 +23,10 @@ const feedbackUrl = String.fromEnvironment('FEEDBACK_URL', defaultValue: '');
 /// The user agent string can be overridden by passing in the USER_AGENT variable
 /// using dart-define.
 class Environment {
-  static const _applicationName = 'Anytime';
-  static const _applicationUrl = 'https://github.com/amugofjava/anytime_podcast_player';
-  static const _projectVersion = '1.4.2';
-  static const _build = '249';
+  static const _applicationName = 'PodcastAnytime';
+  static const _applicationUrl = 'https://github.com/brierfieldlabs/anytime_podcast_player';
+  static const _projectVersion = '1.0.0';
+  static const _build = '1';
 
   static var _agentString = userAgentAppString;
 
@@ -40,5 +40,5 @@ class Environment {
     return _agentString;
   }
 
-  static String get projectVersion => '$_projectVersion b$_build';
+  static String get projectVersion => _projectVersion;
 }

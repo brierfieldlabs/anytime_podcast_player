@@ -59,7 +59,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "uk.me.amugofjava.anytime"
+        applicationId "uk.co.brierfieldlabs.podcastanytime"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()

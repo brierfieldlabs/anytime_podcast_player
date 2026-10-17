@@ -214,7 +214,7 @@ class AnytimePodcastAppState extends State<AnytimePodcastApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         showSemanticsDebugger: false,
-        title: 'Anytime Podcast Player',
+        title: 'Podcast Anytime',
         navigatorObservers: [NavigationRouteObserver()],
         localizationsDelegates: const <LocalizationsDelegate<Object>>[
           AnytimeLocalisationsDelegate(),
@@ -237,7 +237,7 @@ class AnytimePodcastAppState extends State<AnytimePodcastApp> {
         theme: theme,
         // Uncomment builder below to enable accessibility checker tool.
         // builder: (context, child) => AccessibilityTools(child: child),
-        home: const AnytimeHomePage(title: 'Anytime Podcast Player'),
+        home: const AnytimeHomePage(title: 'Podcast Anytime'),
       ),
     );
   }
@@ -614,7 +614,7 @@ class _AnytimeHomePageState extends State<AnytimeHomePage> with WidgetsBindingOb
       case 'about':
         showAboutDialog(
             context: context,
-            applicationName: 'Anytime Podcast Player',
+            applicationName: 'Podcast Anytime',
             applicationVersion: 'v${Environment.projectVersion}',
             applicationIcon: Image.asset(
               'assets/images/anytime-logo-s.png',
