@@ -35,12 +35,14 @@ class _LibraryState extends State<Library> {
     final podcastBloc = Provider.of<PodcastBloc>(context, listen: false);
     final settingsBloc = Provider.of<SettingsBloc>(context, listen: false);
     var currentOrder = settingsBloc.currentSettings.layoutOrder;
+    var currentReverse = settingsBloc.currentSettings.layoutReverse;
 
     /// Listen to library order change.
     _settingsSubscription = settingsBloc.settings.listen((event) {
-      if (event.layoutOrder != currentOrder) {
+      if (event.layoutOrder != currentOrder || event.layoutReverse != currentReverse) {
         podcastBloc.podcastEvent(PodcastEvent.reloadSubscriptions);
         currentOrder = event.layoutOrder;
+        currentReverse = event.layoutReverse;
       }
     });
   }
@@ -88,6 +90,15 @@ class _LibraryState extends State<Library> {
                   stream: settingsBloc.settings,
                   builder: (context, settingsSnapshot) {
                     if (settingsSnapshot.hasData) {
+                      final visible = settingsSnapshot.data!.hideCaughtUpPodcasts
+                          ? snapshot.data!.where((podcast) => podcast.episodeCount > 0).toList(growable: false)
+                          : snapshot.data!;
+                      if (visible.isEmpty) {
+                        return SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Center(child: Text(L.of(context)!.library_all_caught_up)),
+                        );
+                      }
                       var mode = settingsSnapshot.data!.layoutMode;
                       var size = mode == 1 ? 100.0 : 160.0;
 
@@ -95,23 +106,23 @@ class _LibraryState extends State<Library> {
                         return SliverList(
                             delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return PodcastTile(podcast: snapshot.data!.elementAt(index));
+                            return PodcastTile(podcast: visible.elementAt(index));
                           },
-                          childCount: snapshot.data!.length,
+                          childCount: visible.length,
                           addAutomaticKeepAlives: false,
                         ));
                       }
                       return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: size,
-                          mainAxisSpacing: 10.0,
-                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 0.0,
+                          crossAxisSpacing: 0.0,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return PodcastGridTile(podcast: snapshot.data!.elementAt(index));
+                            return PodcastGridTile(podcast: visible.elementAt(index));
                           },
-                          childCount: snapshot.data!.length,
+                          childCount: visible.length,
                         ),
                       );
                     } else {

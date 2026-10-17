@@ -680,7 +680,7 @@ class MobilePodcastService extends PodcastService {
         break;
     }
 
-    return subs;
+    return settingsService.layoutReverse ? subs.reversed.toList(growable: false) : subs;
   }
 
   @override
@@ -714,6 +714,12 @@ class MobilePodcastService extends PodcastService {
             episode.pguid = podcast.guid;
           }
         }
+      }
+
+      // Apply the fork default only when a user follows a new podcast.
+      // Existing subscriptions and their chosen episode order stay unchanged.
+      if (podcast.id == null && podcast.sort == PodcastEpisodeSort.none) {
+        podcast.sort = PodcastEpisodeSort.earliestFirst;
       }
 
       return repository.savePodcast(podcast);

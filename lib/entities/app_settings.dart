@@ -47,8 +47,14 @@ class AppSettings {
   /// If 0, list view; else grid view.
   final int layoutMode;
 
-  /// If 0, list view; else grid view.
+  /// Selected library sort criterion.
   final String layoutOrder;
+
+  /// Reverse the currently selected library sort.
+  final bool layoutReverse;
+
+  /// Hide followed podcasts without unfinished episodes from the library.
+  final bool hideCaughtUpPodcasts;
 
   /// True if we highlight new episodes.
   final bool layoutHighlight;
@@ -84,6 +90,8 @@ class AppSettings {
     required this.volumeBoost,
     required this.layoutMode,
     required this.layoutOrder,
+    required this.layoutReverse,
+    required this.hideCaughtUpPodcasts,
     required this.layoutHighlight,
     required this.layoutCount,
     required this.autoPlay,
@@ -108,6 +116,8 @@ class AppSettings {
         volumeBoost = false,
         layoutMode = 0,
         layoutOrder = 'alphabetical',
+        layoutReverse = false,
+        hideCaughtUpPodcasts = false,
         layoutHighlight = false,
         layoutCount = false,
         autoPlay = false,
@@ -132,6 +142,8 @@ class AppSettings {
     bool? volumeBoost,
     int? layoutMode,
     String? layoutOrder,
+    bool? layoutReverse,
+    bool? hideCaughtUpPodcasts,
     bool? layoutHighlight,
     bool? layoutCount,
     bool? autoPlay,
@@ -155,6 +167,8 @@ class AppSettings {
         volumeBoost: volumeBoost ?? this.volumeBoost,
         layoutMode: layoutMode ?? this.layoutMode,
         layoutOrder: layoutOrder ?? this.layoutOrder,
+        layoutReverse: layoutReverse ?? this.layoutReverse,
+        hideCaughtUpPodcasts: hideCaughtUpPodcasts ?? this.hideCaughtUpPodcasts,
         layoutHighlight: layoutHighlight ?? this.layoutHighlight,
         layoutCount: layoutCount ?? this.layoutCount,
         autoPlay: autoPlay ?? this.autoPlay,

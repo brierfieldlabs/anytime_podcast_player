@@ -189,6 +189,24 @@ class MobileSettingsService extends SettingsService {
   }
 
   @override
+  set layoutReverse(bool reverse) {
+    _sharedPreferences.setBool('layoutReverse', reverse);
+    settingsNotifier.sink.add('layoutReverse');
+  }
+
+  @override
+  bool get layoutReverse => _sharedPreferences.getBool('layoutReverse') ?? false;
+
+  @override
+  set hideCaughtUpPodcasts(bool hide) {
+    _sharedPreferences.setBool('hideCaughtUpPodcasts', hide);
+    settingsNotifier.sink.add('hideCaughtUpPodcasts');
+  }
+
+  @override
+  bool get hideCaughtUpPodcasts => _sharedPreferences.getBool('hideCaughtUpPodcasts') ?? false;
+
+  @override
   set layoutHighlight(bool highlight) {
     _sharedPreferences.setBool('layoutHighlight', highlight);
     settingsNotifier.sink.add('layoutHighlight');

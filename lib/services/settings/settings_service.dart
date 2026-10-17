@@ -65,6 +65,14 @@ abstract class SettingsService {
 
   String get layoutOrder;
 
+  set layoutReverse(bool reverse);
+
+  bool get layoutReverse;
+
+  set hideCaughtUpPodcasts(bool hide);
+
+  bool get hideCaughtUpPodcasts;
+
   set layoutHighlight(bool highlight);
 
   bool get layoutHighlight;

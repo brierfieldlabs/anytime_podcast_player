@@ -30,6 +30,8 @@ class SettingsBloc extends Bloc {
   final BehaviorSubject<int> _autoUpdatePeriod = BehaviorSubject<int>();
   final BehaviorSubject<int> _layoutMode = BehaviorSubject<int>();
   final BehaviorSubject<String> _layoutOrder = BehaviorSubject<String>();
+  final BehaviorSubject<bool> _layoutReverse = BehaviorSubject<bool>();
+  final BehaviorSubject<bool> _hideCaughtUpPodcasts = BehaviorSubject<bool>();
   final BehaviorSubject<bool> _layoutHighlight = BehaviorSubject<bool>();
   final BehaviorSubject<bool> _layoutCount = BehaviorSubject<bool>();
   final BehaviorSubject<bool> _autoPlay = BehaviorSubject<bool>();
@@ -71,6 +73,8 @@ class SettingsBloc extends Bloc {
       volumeBoost: settingsService.volumeBoost,
       layoutMode: settingsService.layoutMode,
       layoutOrder: settingsService.layoutOrder,
+      layoutReverse: settingsService.layoutReverse,
+      hideCaughtUpPodcasts: settingsService.hideCaughtUpPodcasts,
       layoutHighlight: settingsService.layoutHighlight,
       layoutCount: settingsService.layoutCount,
       autoPlay: settingsService.autoPlay,
@@ -173,6 +177,18 @@ class SettingsBloc extends Bloc {
       settingsService.layoutOrder = order;
     });
 
+    _layoutReverse.listen((reverse) {
+      _currentSettings = _currentSettings.copyWith(layoutReverse: reverse);
+      _settings.add(_currentSettings);
+      settingsService.layoutReverse = reverse;
+    });
+
+    _hideCaughtUpPodcasts.listen((hide) {
+      _currentSettings = _currentSettings.copyWith(hideCaughtUpPodcasts: hide);
+      _settings.add(_currentSettings);
+      settingsService.hideCaughtUpPodcasts = hide;
+    });
+
     _layoutHighlight.listen((highlight) {
       _currentSettings = _currentSettings.copyWith(layoutHighlight: highlight);
       _settings.add(_currentSettings);
@@ -254,6 +270,10 @@ class SettingsBloc extends Bloc {
 
   void Function(String) get layoutOrder => _layoutOrder.add;
 
+  void Function(bool) get layoutReverse => _layoutReverse.add;
+
+  void Function(bool) get hideCaughtUpPodcasts => _hideCaughtUpPodcasts.add;
+
   void Function(bool) get layoutHighlight => _layoutHighlight.add;
 
   void Function(bool) get layoutCount => _layoutCount.add;
@@ -284,6 +304,8 @@ class SettingsBloc extends Bloc {
     _autoUpdatePeriod.close();
     _layoutMode.close();
     _layoutOrder.close();
+    _layoutReverse.close();
+    _hideCaughtUpPodcasts.close();
     _layoutHighlight.close();
     _layoutCount.close();
     _backgroundUpdate.close();

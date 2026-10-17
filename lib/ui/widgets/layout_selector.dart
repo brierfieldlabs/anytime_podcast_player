@@ -66,11 +66,12 @@ class _LayoutSelectorWidgetState extends State<LayoutSelectorWidget> {
                 sortOrder = 'Alphabetical';
             }
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
                 const SliderHandle(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 24.0, 8.0, 0.0),
@@ -355,10 +356,21 @@ class _LayoutSelectorWidgetState extends State<LayoutSelectorWidget> {
                     ),
                   ),
                 ),
+                SwitchListTile.adaptive(
+                  title: Text(L.of(context)!.layout_selector_hide_caught_up),
+                  value: snapshot.data!.hideCaughtUpPodcasts,
+                  onChanged: settingsBloc.hideCaughtUpPodcasts,
+                ),
+                SwitchListTile.adaptive(
+                  title: Text(L.of(context)!.layout_selector_reverse_sort),
+                  value: snapshot.data!.layoutReverse,
+                  onChanged: settingsBloc.layoutReverse,
+                ),
                 const SizedBox(
                   height: 8.0,
                 ),
-              ],
+                ],
+              ),
             );
           }),
     );
