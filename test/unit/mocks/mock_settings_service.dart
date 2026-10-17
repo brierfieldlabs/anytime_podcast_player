@@ -23,6 +23,12 @@ class MockSettingsService extends SettingsService {
   String layoutOrder = 'followed';
 
   @override
+  bool layoutReverse = false;
+
+  @override
+  bool hideCaughtUpPodcasts = false;
+
+  @override
   bool layoutHighlight = false;
 
   @override
